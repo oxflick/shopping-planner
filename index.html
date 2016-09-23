@@ -2,21 +2,74 @@
 <html ng-app="checkOffApp">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<script src="angular.min.js"></script>
 	<script src="app.js"></script>
 	<style> 
-	    body { 
-	      font-family: 'Roboto', sans-serif;
-	    }
+	body { 
+		font-family: 'Roboto', sans-serif;
+	}
+	.error {
+		color: red;
+	}
+	#shoppingpicker h1 {
+		text-align: center;
+	}
+	#shoppingpicker {
+		width: 100%;
+		margin: 0 auto;
+		padding: 20px;
+	}
+	.toBuy {
+		width: 50%;
+		float:left;
+		text-align: right;
+	}
+	.Bought {
+		width: 50%;
+		float:left;
+		text-align: left;
+	}
+	h2 {
+		margin-left: 40px;
+	}
 
+	ul {
+	    list-style-type: none;
+	}
+
+	li {
+		padding: 3px;
+	}
+	
 	</style>
 	<title> Shopping Planner List</title>
 </head>
 <body>
- <h1>Please, pick the item you've purchased?</h1>	
- <div ng-controller="MyFirstController">
- 	
- </div>	
+		
+	<div id="shoppingpicker">
+		<h1>Shopping Planner List</h1>
+		<div class="toBuy" ng-controller='ToBuyShoppingController as itemToBuy'>
+			<h2> To Buy </h2>
+			<ul>
+				<li ng-repeat="item in itemToBuy.items">
+					Buy {{ item.quantity }} {{ item.name }}
+					<button ng-click="itemToBuy.removeItem($index);">Bought</button>
+				</li>
+				<div class="error" ng-if="itemToBuy.errorMessage">{{ itemToBuy.errorMessage }}</div>	
+			</ul>
+		</div>
+
+		<div class="Bought" ng-controller='AlreadyBoughtShoppingController as showList'>
+			<h2> Already Bought </h2>
+			<ul>
+				<li ng-repeat="item in showList.items">
+					Bought {{ item.quantity }} {{ item.name }}
+				</li>
+			<div class="error" ng-show="!showList.items.length">Nothing bought yet</div>	
+			</ul>
+		</div>
+	</div>
 </body>
 </html>
